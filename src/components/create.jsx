@@ -50,7 +50,7 @@ export function Create() {
               marginTop: "10%"}}>
 
             <input type="text" placeholder="Name"  value={name} onChange={(e) => setName(e.target.value)}
-            style={{width: "40%", marginBottom: "15px",height: "5%" }}></input>
+            style={{width: "40%", marginBottom: "15px",height: "5%", }}></input>
 
             <input type="text" placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)}
             style={{width: "40%", marginBottom: "15px",height: "5%" }}></input>
@@ -62,7 +62,7 @@ export function Create() {
             style={{width: "40%", height: "5%", marginBottom: "15px"}}></input>
 
 
-            <button type="submit" style={{backgroundColor: "purple"}}>Submit</button>
+            <button type="submit" style={{backgroundColor: "#6a5acd",height: "40px", width: "60px"}}>Submit</button>
 
             </div>
 

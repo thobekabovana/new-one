@@ -24,7 +24,7 @@ export function LogIn() {
              width: "100%",
              height: "100vh",
             
-            backgroundImage: "url('https://th.bing.com/th/id/OIP.ZAMzSvckAk1uVl2mNHJCKgHaEK?rs=1&pid=ImgDetMain')",
+            backgroundImage: "url('https://th.bing.com/th/id/R.ffedae46889c4082b212d03a7c31ac29?rik=UDbZi4j3H6vsYQ&pid=ImgRaw&r=0')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -72,7 +72,7 @@ export function LogIn() {
             style={{width: "40%", height: "5%", marginBottom: "15px"}}></input>
 
             
-            <button type="submit" style={{backgroundColor: "purple"}}>Submit</button>
+            <button type="submit" style={{backgroundColor: "#6a5acd",height: "40px", width: "60px"}}>LogIn</button>
 
         </div>
         </div>
