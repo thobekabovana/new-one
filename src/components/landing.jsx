@@ -27,8 +27,8 @@ export default function Landing() {
                     right: "0",
                     padding: "20px",}}>
 
-       <Link to="./Log-in" style={{marginRight: "20px", color: "white", fontSize: "20px"}}>Login</Link>
-        <Link to="./create" style={{ color: "white", fontSize: "20px"}}>SignUp</Link>
+       {/* <Link to="./Log-in" >Login</Link>
+        <Link to="./create" >SignUp</Link> */}
       
         </nav>             
 
@@ -42,10 +42,12 @@ export default function Landing() {
 
                                     
         <h1 style={{color: "white"}}>Remind Yourself Of What!</h1>
-        <h2  style={{color: "#6a5acd"}}>You Need To Do For The Day</h2>
+        <h2  style={{color: "violet"}}>You Need To Do For The Day</h2>
         <p style={{color: "white"}}>On my app you remind yourself on what you will be busy doing. Have time to start and end the project</p>
        
-      </aside>
+      </aside >
+      
+      <aside>
       <img src={picture} style={{ borderRadius: "50%",
                                     float: "right ", 
                                     margin: "10px",
@@ -53,8 +55,6 @@ export default function Landing() {
                                     marginLeft: "auto",
                                     marginTopRight: "20%",
                                     marginTop: "5%"}}></img>
-      <aside>
-       
       </aside>
       </div>
     </>

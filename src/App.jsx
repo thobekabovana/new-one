@@ -5,7 +5,9 @@ import {Home} from './components/home';
 import { LogIn } from './components/LogIn';
 import {Create} from './components/create';
 import Landing from './components/landing';
-// import {Navigation} from './components/navigation';
+import Layout from './components/Layout';
+// import {Navig} from './components/navigation';
+// import { Footer } from './components/footer';
 
 
 function App() {
@@ -16,10 +18,12 @@ function App() {
     
     <BrowserRouter>
     <Routes>
-  <Route path="/" element={<Landing />} />
+    <Route path="/" element={<Layout />} >
+    <Route  index element={<Landing />} />
   <Route path="/log-in" element={<LogIn />} />
   <Route path="/create" element={<Create />} />
   <Route path="/home" element={<Home />} />
+  </Route>
 </Routes>
     </BrowserRouter>
       
