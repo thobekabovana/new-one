@@ -16,46 +16,31 @@ export function LogIn() {
 
     return(
         <>
-        <form onSubmit={handleSubmit}>
-        <div style={{
-             position: "absolute",
-             top: 0,
-             left: 0,
-             width: "100%",
-             height: "100vh",
-            
-            backgroundImage: "url('https://th.bing.com/th/id/R.ffedae46889c4082b212d03a7c31ac29?rik=UDbZi4j3H6vsYQ&pid=ImgRaw&r=0')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-        }}>
-        
+        <form onSubmit={handleSubmit} >
+        <div>
+        <div style={{ backgroundImage: "url('https://th.bing.com/th/id/OIP.mmFR9I5glIUFMUZcRRILGgAAAA?w=429&h=600&rs=1&pid=ImgDetMain')",
+                           backgroundRepeat: "no-repeat",
+                           backgroundSize: "cover",
+                           alignItems: "center",
+                           borderRadius: "10px",
+                           boxShadow: '0 4px 8px rgba(0, 0, 0, 5)',
+                           textAlign: "center",
+                           justifyItems: "center",
+                           backgroundPosition: "center",
+                           height: "80vh",
+                           width: "40%",
+                           marginTop: "8%",
+                           marginLeft: "30%"
+            }}>
+
         <nav>
         <ul>
 
-        <Link to="/create">
-      <button style={{
-      backgroundColor: "purple",
-      color: "white",
-      padding: "10px 20px",
-      textDecoration: "none",
-      borderRadius: "5px",
-      cursor: "pointer",
-      position: "absolute",
-      left: "85%",
-      top: "1%",
-    }}>Sign Up</button>
-    </Link>
-
-    {/* <li><a >Sign Up</a></li>vh */}
+       
 
     </ul>
         </nav>
-        <h1 style={{display: "flex",
-              color: "white",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "5%"}}>Log-In</h1>
+        
         
         <div style={ {
               display: "flex",
@@ -63,6 +48,13 @@ export function LogIn() {
               alignItems: "center",
               justifyContent: "center",
               marginTop: "15%"}}>
+
+<h1 style={{display: "flex",
+              color: "violet",
+              fontSize: "50px",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "20%"}}>Log-In</h1>
 
 
             <input type="text" placeholder="username@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)}
@@ -72,8 +64,9 @@ export function LogIn() {
             style={{width: "40%", height: "5%", marginBottom: "15px"}}></input>
 
             
-            <button type="submit" style={{backgroundColor: "#6a5acd",height: "40px", width: "60px"}}>LogIn</button>
+            <button type="submit" style={{backgroundColor: "violet",height: "40px", width: "60px",}}>LogIn</button>
 
+        </div>
         </div>
         </div>
         </form>

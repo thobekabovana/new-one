@@ -8,6 +8,10 @@ export function Create() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate(); 
 
+  // this is where u set the user name to have first have cabital later and set the limitted words/ aslo in the password
+  const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -23,31 +27,36 @@ export function Create() {
     return(
         <>
         <form onSubmit={handleSubmit}>
-        <div style={{
-             position: "absolute",
-             top: 0,
-             left: 0,
-             width: "100%",
-             height: "100vh",
+        <div style={{ backgroundImage: "url('https://th.bing.com/th/id/OIP.mmFR9I5glIUFMUZcRRILGgAAAA?w=429&h=600&rs=1&pid=ImgDetMain')",
+                           backgroundRepeat: "no-repeat",
+                           backgroundSize: "cover",
+                           alignItems: "center",
+                           borderRadius: "10px",
+                           boxShadow: '0 4px 8px rgba(0, 0, 0, 5)',
+                           textAlign: "center",
+                           justifyItems: "center",
+                           backgroundPosition: "center",
+                           height: "80vh",
+                           width: "40%",
+                           marginTop: "8%",
+                           marginLeft: "30%"
+            }}>
+
             
-            backgroundImage: "url('https://th.bing.com/th/id/R.ffedae46889c4082b212d03a7c31ac29?rik=UDbZi4j3H6vsYQ&pid=ImgRaw&r=0')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-        }}>
-            <h1 style={{display: "flex",
-              color: "#660033",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "100px",
-              marginTop: "5%"}}>Registor</h1>
 
             <div style={ {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              marginTop: "10%"}}>
+              marginTop: "0%"}}>
+
+          <h1 style={{display: "flex",
+              color: "violet",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "50px",
+              marginTop: "20%"}}>Registor</h1>
 
             <input type="text" placeholder="Name"  value={name} onChange={(e) => setName(e.target.value)}
             style={{width: "40%", marginBottom: "15px",height: "5%", }}></input>
@@ -62,7 +71,7 @@ export function Create() {
             style={{width: "40%", height: "5%", marginBottom: "15px"}}></input>
 
 
-            <button type="submit" style={{backgroundColor: "#6a5acd",height: "40px", width: "60px"}}>Submit</button>
+            <button type="submit" style={{backgroundColor: "violet",height: "40px", width: "60px"}}>Submit</button>
 
             </div>
 

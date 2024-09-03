@@ -6,8 +6,7 @@ import { LogIn } from './components/LogIn';
 import {Create} from './components/create';
 import Landing from './components/landing';
 import Layout from './components/Layout';
-// import {Navig} from './components/navigation';
-// import { Footer } from './components/footer';
+
 
 
 function App() {

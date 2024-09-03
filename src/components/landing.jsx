@@ -13,7 +13,7 @@ export default function Landing() {
   return (
     <> 
     <div style={{padding: "10%", 
-                 backgroundColor: "black", 
+                //  backgroundColor: "black", 
                  height: "100vh"}}>
 
        <nav style={{marginRight: "10px",
@@ -41,9 +41,9 @@ export default function Landing() {
                      flexWrap: "wrap"}}>
 
                                     
-        <h1 style={{color: "white"}}>Remind Yourself Of What!</h1>
+        <h1 style={{color: "black"}}>Remind Yourself Of What!</h1>
         <h2  style={{color: "violet"}}>You Need To Do For The Day</h2>
-        <p style={{color: "white"}}>On my app you remind yourself on what you will be busy doing. Have time to start and end the project</p>
+        <p style={{color: "black"}}>On my app you remind yourself on what you will be busy doing. Have time to start and end the project</p>
        
       </aside >
       
