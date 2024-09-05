@@ -1,49 +1,89 @@
-import { useState } from "react";
-// import { useContext } from 'react';
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom'; 
+import AddTodo from './addTodo';
+import { useParams } from 'react-router-dom';
 
-export function Home() {
-    const navigate = useNavigate(); 
-    const [searchQuery, setSearchQuery] = useState('');
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState('');
-  const [editedTodo, setEditedTodo] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+export default function Home() {
+
+
+  const [info, setInfo] = useState([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [todoId, setTodoId] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const { id } = useParams();
+
   
-  const handleSearch = (event) => {
-    setSearchQuery(event.target.value);
-    event.preventDefault();
-    searchItems(searchTerm);
-   
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/todo').then((res) => {
+      setInfo(res.data);
+    }).catch((error) => {
+      console.log(error, 'Oops crashed');
+    });
+  }, []);
+
+  const fetchTodo = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/todo');
+      const usersData = response.data;
+      setTodos(TodosData);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  useEffect(() => {
+    fetchTodo();
+  }, []);
+
+
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:5000/todo/${id}`)
+      .then((res) => {
+        console.log(res.data, 'Todo deleted successfully!');
+        setInfo(info.filter((todo) => todo._id !== id));
+      })
+      .catch((error) => {
+        console.log(error, 'Error deleting todo');
+      });
   };
 
-  
-    
-    const handleAddTodo = () => {
-        setTodos((prevTodos) => [...prevTodos, { id: Date.now(), name: newTodo }]);
-        setNewTodo('');
-        alert('Added Successfully')
-      };
-      const handleEditTodo = (todo) => {
-        setEditedTodo(todo);
-      };
-      const handleUpdateTodo = (updatedTodo) => {
-        setTodos((prevTodos) =>
-          prevTodos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
-        );
-        setEditedTodo(null);
-      };
-      const handleDeleteTodo = (todoId) => {
-        setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId));
-      };
-   
-      const filteredTodos = todos.filter((todo) =>
-        todo.name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-   
-    return(
-        <>
+
+  const handleEdit = (todo) => {
+    setIsEditing(true);
+    setTodoId(todo._id);
+    setEmail(todo.email);
+    setPassword(todo.password);
+  };
+
+
+  const handleUpdate = () => {
+    const updatedTodo = { email, password };
+    axios.put(`http://localhost:5000/todo/${todoId}`, updatedTodo)
+      .then((res) => {
+        console.log(res.data, 'Todo updated successfully!');
+        setInfo(info.map((todo) => todo._id === todoId ? res.data : todo));
+        setIsEditing(false);
+        setEmail('');
+        setPassword('');
+      })
+      .catch((error) => {
+        console.log(error, 'Error updating todo');
+      });
+  };
+
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEmail('');
+    setPassword('');
+  };
+console.log("This is the object" ,info)
+  return (
+
+    <>
         <div>
         
             
@@ -70,110 +110,90 @@ export function Home() {
               marginTop: "5%"}}>What to do?</h1>
 
 
-<div style={{ overflow: 'hidden'}}>
+<div style={{
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+    }}>
+      {error ? (
+        <p>Error: {error}</p>
+      ) : (
+        info.map((todo, index) => (
+          <div key={index} style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "15px",
+            margin: "4%",
+            width: "40%",
+            borderRadius: "5px",
+            boxShadow: "0 5px 10px rgba(2, 2, 2, 2.1)",
+            backgroundImage: "url('https://coolbackgrounds.io/images/backgrounds/white/white-unsplash-9d0375d2.jpg')",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}>
 
-          <input type="text" 
-        //   value={newTodo}
-                 placeholder="tell me what you want to do"  
-                 style={{width: "25%", 
-                         textAlign: "center", 
-                         height: "30px", 
-                        marginLeft: "3%", 
-                         marginTop: "5%"}}>
-                </input>
-                <label htmlFor="priority" style={{fontSize: "25px",marginLeft: "3%" }}>Priority:</label>
-                <select id="priority" name="priority">
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                </select>
-         
+            <h2 style={{ color: "black" }}>To Do {todo.id}</h2>
 
-            <button  onClick={handleAddTodo}  
-                         style={{height:"34px", 
-                         width: "7%", 
-                         backgroundColor: "violet",
-                         marginLeft: "3%",
-                         height: "2.5%"
-                         }}>Add</button>
-            
-            <input
-            type="search"
-            // value={searchQuery}
-            value={searchTerm}
-            // onChange={handleSearch}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Search..."
-            style={{
-              width: "20%",
-              padding: "10px",
-              fontSize: "18px",
-              marginLeft: "70%", 
-              textAlign: "center",
-              height: "20px",
-              marginBottom: "5%",
-              
-            }}
-          />  <button type="submit" onClick={handleSearch}> Search </button>
-            </div>
+            <p style={{ fontSize: "18px", fontWeight: "bold" }}>Name: {todo.name}</p>
+            <p style={{ fontWeight: "bold" }}>Age: {todo.age}</p>
+            <hr style={{ width: "100%", marginBottom: "15px" }} />
+
+            <>
+           
+            {editUserId === todo.id ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={editEmail}
+                                    onChange={(e) => setEditEmail(e.target.value)}
+                                />
+                                <input
+                                    type="number"
+                                    value={editPassword}
+                                    onChange={(e) => setEditPassword(e.target.value)}
+                                />
+                                <button onClick={() => updateTodo(todo.id)} style={{marginBottom: "10px"}}>Update</button>
+                                <button onClick={() => setEditTodoId(null)}>Cancel</button>
+                            </>
+                        ) : (
+                            <>
+      
+        <button key={`${todo.id}-${editUserId}`} onClick={() => handleEditClick(todo)} style={{ marginBottom: "10px" }}>Edit</button>
+      
+      <button key={`${todo.id}-${editUserId}`} onClick={() => deleteUser(todo.id)}>Delete</button>
+    </>
+                        )}
+          
+                            </>
+
+        </div>
 
           
-              
-              
 
-              <ul style={{fontSize:"35px"}}>
-            {filteredTodos.map((todo) => (
-              <li key={todo.id}>
-                {editedTodo && editedTodo.id === todo.id ? (
-                  <input
-                    type="text"
-                    value={editedTodo.name}
-                    onChange={(event) => setEditedTodo({ ...editedTodo, name: event.target.value })}
-                    style={{
-                      width: "50%",
-                      padding: "10px",
-                      fontSize: "18px",
-                      marginLeft: "10%",
-                      color: "black"
-                    }}
-                  />
-                ) : (
-                  <span>{todo.name}</span>
-                )}
-                <button
-                  onClick={() => handleEditTodo(todo)}
-                  style={{
-                    backgroundColor: "#FFC107",
-                    color: "white",
-                    padding: "5px 10px",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    marginLeft: "10px"
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteTodo(todo.id)}
-                  style={{
-                    backgroundColor: "#FF3737",
-                    color: "white",
-                    padding: "5px 10px",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    marginLeft: "10px"
-                  }}
-                > Delete</button>
-              </li>
-            ))}
-          </ul>
-          </div>
-
+        ))
+      )}
+    </div>
+</div>
         </div>
     
         
         </>
-    )
+   
+  );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

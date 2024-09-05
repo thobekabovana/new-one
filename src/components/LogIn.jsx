@@ -66,6 +66,10 @@ export function LogIn() {
             
             <button type="submit" style={{backgroundColor: "violet",height: "40px", width: "60px",}}>LogIn</button>
 
+            {/* <span>Don’t have an account? </span>
+          <Link to="/create" style={styles.link}>Sign Up</Link> */}
+       
+
         </div>
         </div>
         </div>

@@ -1,15 +1,21 @@
-// import { useState } from 'react'
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from 'react'
+import { useEffect } from 'react';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Home} from './components/home';
 import { LogIn } from './components/LogIn';
 import {Create} from './components/create';
 import Landing from './components/landing';
 import Layout from './components/Layout';
+import Home from './components/home'
 
 
 
 function App() {
+
+  
+
+
+
  
 
   return (
