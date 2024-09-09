@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-export function Create() {
+import axios from "axios";
 
+export function Create() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate(); 
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // this is where u set the user name to have first have cabital later and set the limitted words/ aslo in the password
   const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
   const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
@@ -18,11 +19,26 @@ export function Create() {
       alert('Passwords do not match');
       return;
     }
-    navigate('/home', { replace: true });
-  };
 
-  
-    
+    if (!USER_REGEX.test(name)) {
+      alert('Invalid username');
+      return;
+    }
+
+    if (!PWD_REGEX.test(password)) {
+      alert('Invalid password');
+      return;
+    }
+
+    axios.post('http://localhost:5000/register', { name, email, password })
+      .then(response => {
+        navigate('/home', { replace: true });
+      })
+      .catch(error => {
+        console.error(error);
+        setError(error.message);
+      });
+  };
 
     return(
         <>
@@ -57,6 +73,8 @@ export function Create() {
               justifyContent: "center",
               fontSize: "50px",
               marginTop: "20%"}}>Registor</h1>
+
+              
 
             <input type="text" placeholder="Name"  value={name} onChange={(e) => setName(e.target.value)}
             style={{width: "40%", marginBottom: "15px",height: "5%", }}></input>

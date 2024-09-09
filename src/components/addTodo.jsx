@@ -1,78 +1,40 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import axios from 'axios';
+<ul>
+        {todo.map((todo) => (
+          <li key={todo.id}>
+            <h2>{todo.title}</h2>
+            <p>{todo.description}</p>
+            <p>Priority: {todo.priority}</p>
+            <button className='edit-btn' onClick={() => setEditingTask(todo)}>Edit</button>
+            <button className='delete-btn' onClick={() => handleDeleteTask(todo.id)}>Delete</button>
+            {editingTodo === todo && (
 
-const AddTodo = () => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [users, setUsers] = useState([]);
+              <form>
+                <label>
+                  Title:
+                  <input type="text" value={editingTodo.title} onChange={(event) => handleEditTaskChange(event, 'title')} />
+                </label>
+                <br />
+                <label>
 
-  useEffect(() => {
-    fetchUsers();
-}, []); // Run only once on component mount
+                  Description:
+                  <input type="text" value={editingTodo.description} onChange={(event) => handleEditTaskChange(event, 'description')} />
+                </label>
+                <br />
+                <label>
 
-const fetchUsers = async () => {
-    try {
-        const response = await axios.get('http://localhost:5000/todo');
-        setUsers(response.data);
-    } catch (error) {
-        console.error('Error fetching todo:', error);
-    }
-};
+                  Priority:
+                  <select value={editingTodo.priority} onChange={(event) => handleEditTaskChange(event, 'priority')}>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                  </select>
+                </label>
+                <br />
 
-const fetchUser = async (id) => {
-    try {
-        const response = await axios.get(`http://localhost:5000/todo/${id}`);
-        setUser(response.data);
-    } catch (error) {
-        console.error('Error fetching todo:', error);
-        setUser(null);
-    }
-};
-
-const handleAdd = async () => {
-    try {
-        await axios.post('http://localhost:5000/todo', { name, age, email });
-        setName('');
-        setAge('');
-        setEmail(''); // assuming you have an setEmail function
-        fetchUsers();
-    } catch (error) {same
-        (`error handling code remains the` )
-    }
-};
-  
-  return (
-    <div style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      padding: "15px",
-      margin: "4%",
-      width: "40%",
-      borderRadius: "5px",
-      boxShadow: "0 5px 10px rgba(2, 2, 2, 2.1)",
-      backgroundImage: "url('https://thumbs.dreamstime.com/b/collection-various-blank-white-book-white-background-clipping-path-30442934.jpg')",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-    }}>
-      <h2>Add User</h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Age"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-      />
-      <button onClick={handleAdd}>Add</button>
-    </div>
-  );
-};
-
-export default AddTodo;
+                <button type="submit" onClick={() => handleUpdateTasks(editingTodo)}>Update Task</button>
+                
+              </form>
+            )}
+          </li>
+        ))}
+      </ul>
