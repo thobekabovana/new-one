@@ -15,7 +15,7 @@ Install dependencies
 ```
 Start the react server
 ```bash
-  npm run run
+  npm run dev
 ```
 
 ## Run Server
