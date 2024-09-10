@@ -31,5 +31,6 @@ Run your server
 
 ## Tech Stack
 **Client:** React JS, HTML5, JavaScript, CSS3
+<br>
 **Server:** Server.js, Express, Cors, Morgan, better-sqlit3, sqlite3, nodemon 
 
