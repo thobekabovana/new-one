@@ -57,6 +57,7 @@ app.get('/register', (req, res) => {
         SELECT * FROM register
     `;
     const rows = db.prepare(sql).all();
+   console.log(rows)
     res.json(rows);
 });
 
@@ -158,22 +159,32 @@ app.get('/home', (req, res) => {
         SELECT * FROM home
     `;
     const rows = db.prepare(sql).all();
+    console.log(rows)
     res.json(rows);
 });
 
 // Get a todo item by id
-app.get('/home/:id', (req, res) => {
-    const { id } = req.params;
+// app.get('/home/:id', (req, res) => {
+//     const { id } = req.params;
+//     const sql = `
+//         SELECT * FROM home
+//         WHERE id = ?
+//     `;
+//     const row = db.prepare(sql).get(id);
+//     if (row) {
+//         res.json(row);
+//     } else {
+//         res.status(404).json({ error: 'Todo not found' });
+//     }
+// });
+
+// Get all tasks
+app.get('/home', (req, res) => {
     const sql = `
         SELECT * FROM home
-        WHERE id = ?
     `;
-    const row = db.prepare(sql).get(id);
-    if (row) {
-        res.json(row);
-    } else {
-        res.status(404).json({ error: 'Todo not found' });
-    }
+    const rows = db.prepare(sql).all();
+    res.json(rows);
 });
 
 // Update a todo item by id

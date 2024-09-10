@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 function Todo() {
   const [todo, setTodo] = useState([]);
   const [newTodo, setNewTodo] = useState({ title: '', description: '', priority: 'medium' });
   const [editingTodo, setEditingTodo] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTodo, setFilteredTodo] = useState([]);
   
 
   useEffect(() => {
@@ -18,6 +21,15 @@ function Todo() {
        
       });
   }, []);
+
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    const filteredList = todo.filter((todoItem) => {
+      return todoItem.id.toString().includes(searchTerm);
+    });
+    setFilteredTodo(filteredList);
+  };
 
   const handleAddTodo = async () => {
     axios.post('http://localhost:5000/home', newTodo)
@@ -120,10 +132,10 @@ function Todo() {
 
           <label>
             {/* Priority: */}
-            <select value={newTodo.priority} onChange={handlePriorityChange} >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
+            <select value={newTodo.priority} onChange={handlePriorityChange}>
+              <option value="easy" style={{backgroundColor: "green"}}>Low</option>
+              <option value="medium" style={{backgroundColor: "yellow"}}>Medium</option>
+              <option value="hard" style={{backgroundColor: "red"}}>High</option>
             </select>
           </label>
           <br />
@@ -148,6 +160,18 @@ function Todo() {
   >
     Your Todo list
   </h1>
+
+  <input type="text" value={searchTerm} onChange={handleSearch} placeholder="Search by ID" style={{
+        width: "23%",
+        height: "20px",
+        padding: "10px",
+        fontSize: "16px",
+        border: "1px solid #ccc",
+        borderRadius: "5px",
+        marginLeft: "37.5%",
+        marginBottom: "20px",
+        
+      }}/>
 
   <ul
     style={{
