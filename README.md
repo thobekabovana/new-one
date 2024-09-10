@@ -17,8 +17,6 @@ Start the react server
 ```bash
   npm run run
 ```
-## Tech Stack
-**Client:** React JS, HTML5, JavaScript, CSS3
 
 ## Run Server
 
@@ -30,3 +28,8 @@ Run your server
 ```bash
   nodemon server,js
 ```
+
+## Tech Stack
+**Client:** React JS, HTML5, JavaScript, CSS3
+**Server:** Server.js, Express, Cors, Morgan, better-sqlit3, sqlite3, nodemon 
+
