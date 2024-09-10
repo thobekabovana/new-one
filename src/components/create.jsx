@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export function Create() {
   const [name, setName] = useState('');
@@ -90,6 +91,9 @@ export function Create() {
 
 
             <button type="submit" style={{backgroundColor: "violet",height: "40px", width: "60px"}}>Submit</button>
+
+            <br></br>
+            <p>Already have an account? <Link to="/log-in">Login here</Link></p>
 
             </div>
 

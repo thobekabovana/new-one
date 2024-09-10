@@ -1,40 +1,83 @@
-<ul>
-        {todo.map((todo) => (
-          <li key={todo.id}>
-            <h2>{todo.title}</h2>
-            <p>{todo.description}</p>
-            <p>Priority: {todo.priority}</p>
-            <button className='edit-btn' onClick={() => setEditingTask(todo)}>Edit</button>
-            <button className='delete-btn' onClick={() => handleDeleteTask(todo.id)}>Delete</button>
-            {editingTodo === todo && (
+// Create the table for todo 
+const createTable = () => {
+  const sql = `
+      CREATE TABLE IF NOT EXISTS todo (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          title TEXT NOT NULL,
+          description TEXT,
+          priority TEXT CHECK(priority IN ('easy', 'medium', 'hard'))
+      )
+  `;
+  db.prepare(sql).run();
+};
 
-              <form>
-                <label>
-                  Title:
-                  <input type="text" value={editingTodo.title} onChange={(event) => handleEditTaskChange(event, 'title')} />
-                </label>
-                <br />
-                <label>
+createTable();
 
-                  Description:
-                  <input type="text" value={editingTodo.description} onChange={(event) => handleEditTaskChange(event, 'description')} />
-                </label>
-                <br />
-                <label>
+// Insert a new todo item
+app.post('/todo', (req, res) => {
+  const { title, description, priority } = req.body;
+  const sql = `
+      INSERT INTO todo (title, description, priority)
+      VALUES (?, ?, ?)
+  `;
+  const info = db.prepare(sql).run(title, description, priority);
+  res.status(201).json({ id: info.lastInsertRowid });
+});
 
-                  Priority:
-                  <select value={editingTodo.priority} onChange={(event) => handleEditTaskChange(event, 'priority')}>
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                  </select>
-                </label>
-                <br />
+db.prepare("DROP TABLE IF EXISTS todo").run(); createTable();
 
-                <button type="submit" onClick={() => handleUpdateTasks(editingTodo)}>Update Task</button>
-                
-              </form>
-            )}
-          </li>
-        ))}
-      </ul>
+// Get all todo items
+app.get('/todo', (req, res) => {
+  const sql = `
+      SELECT * FROM todo
+  `;
+  const rows = db.prepare(sql).all();
+  res.json(rows);
+});
+
+// Get a todo item by id
+app.get('/todo/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = `
+      SELECT * FROM todo
+      WHERE id = ?
+  `;
+  const row = db.prepare(sql).get(id);
+  if (row) {
+      res.json(row);
+  } else {
+      res.status(404).json({ error: 'Todo not found' });
+  }
+});
+
+// Update a todo item by id
+app.put('/todo/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, description, priority } = req.body;
+  const sql = `
+      UPDATE todo
+      SET title = ?, description = ?, priority = ?
+      WHERE id = ?
+  `;
+  const info = db.prepare(sql).run(title, description, priority, id);
+  if (info.changes > 0) {
+      res.json({ message: 'Todo updated successfully' });
+  } else {
+      res.status(404).json({ error: 'Todo not found' });
+  }
+});
+
+// Delete a todo item by id
+app.delete('/todo/:id', (req, res) => {
+  const { id } = req.params;
+  const sql = `
+      DELETE FROM todo
+      WHERE id = ?
+  `;
+  const info = db.prepare(sql).run(id);
+  if (info.changes > 0) {
+      res.json({ message: 'Todo deleted successfully' });
+  } else {
+      res.status(404).json({ error: 'Todo not found' });
+  }
+});

@@ -126,10 +126,10 @@ app.post('/validatePassword', (req, res) => {
     });
   });
 
-// Create the table for todo 
-const createTable = () => {
+//   Create the table for todo 
+  const createTable = () => {
     const sql = `
-        CREATE TABLE IF NOT EXISTS todo (
+        CREATE TABLE IF NOT EXISTS home (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             description TEXT,
@@ -137,37 +137,35 @@ const createTable = () => {
         )
     `;
     db.prepare(sql).run();
-};
+  };
+  
+  createTable();
 
-createTable();
-
-// Insert a new todo item
-app.post('/todo', (req, res) => {
+// Insert a new todo
+app.post('/home', (req, res) => {
     const { title, description, priority } = req.body;
     const sql = `
-        INSERT INTO todo (title, description, priority)
+        INSERT INTO home (title, description,priority)
         VALUES (?, ?, ?)
     `;
     const info = db.prepare(sql).run(title, description, priority);
     res.status(201).json({ id: info.lastInsertRowid });
 });
 
-db.prepare("DROP TABLE IF EXISTS todo").run(); createTable();
-
 // Get all todo items
-app.get('/todo', (req, res) => {
+app.get('/home', (req, res) => {
     const sql = `
-        SELECT * FROM todo
+        SELECT * FROM home
     `;
     const rows = db.prepare(sql).all();
     res.json(rows);
 });
 
 // Get a todo item by id
-app.get('/todo/:id', (req, res) => {
+app.get('/home/:id', (req, res) => {
     const { id } = req.params;
     const sql = `
-        SELECT * FROM todo
+        SELECT * FROM home
         WHERE id = ?
     `;
     const row = db.prepare(sql).get(id);
@@ -179,27 +177,27 @@ app.get('/todo/:id', (req, res) => {
 });
 
 // Update a todo item by id
-app.put('/todo/:id', (req, res) => {
+app.put('/home/:id', (req, res) => {
     const { id } = req.params;
     const { title, description, priority } = req.body;
     const sql = `
-        UPDATE todo
+        UPDATE home
         SET title = ?, description = ?, priority = ?
         WHERE id = ?
     `;
     const info = db.prepare(sql).run(title, description, priority, id);
     if (info.changes > 0) {
-        res.json({ message: 'Todo updated successfully' });
+        res.json({ message: 'Your Todo have been updated successfully' });
     } else {
         res.status(404).json({ error: 'Todo not found' });
     }
 });
 
 // Delete a todo item by id
-app.delete('/todo/:id', (req, res) => {
+app.delete('/home/:id', (req, res) => {
     const { id } = req.params;
     const sql = `
-        DELETE FROM todo
+        DELETE FROM home
         WHERE id = ?
     `;
     const info = db.prepare(sql).run(id);
@@ -209,6 +207,7 @@ app.delete('/todo/:id', (req, res) => {
         res.status(404).json({ error: 'Todo not found' });
     }
 });
+
 
 app.listen(5000, () => {
     console.log('Server is running on port http://localhost:5000')

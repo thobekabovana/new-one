@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-export function LogIn() {
+export function LogIn({to}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -23,7 +24,8 @@ export function LogIn() {
     } catch (error) {
       setError("An error occurred. Please try again.");
       console.error('Error:', error);
-    }
+    };
+    
   };
 
   return (
@@ -99,6 +101,9 @@ export function LogIn() {
             LogIn
           </button>
           {error && <p style={{ color: 'red' }}>{error}</p>}
+
+          <br></br>
+          <p>Don't have an account? <Link to="/create">Register here</Link></p>
         </div>
       </div>
     </form>
