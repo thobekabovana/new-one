@@ -7,19 +7,26 @@ Your application should include the following features:</p>
 ## Run Locally
 Clone the project
 ```bash
-  git clone https://github.com/Amniei/Shopping-List.git
-```
-Go to the project directory
-```bash
-  cd Shopping-List
+  https://github.com/thobekabovana/new-one.git
 ```
 Install dependencies
 ```bash
-  npm install
+  npm install 
 ```
 Start the react server
 ```bash
-  npm run start
+  npm run run
 ```
 ## Tech Stack
 **Client:** React JS, HTML5, JavaScript, CSS3
+
+## Run Server
+
+Go to the project directory
+```bash
+  cd server
+```
+Run your server
+```bash
+  nodemon server,js
+```
